@@ -1,5 +1,6 @@
 import FormSubmit from '@/components/form-submit';
 import { storePost } from '@/lib/posts';
+import { redirect } from 'next/navigation';
 
 export default function NewPostPage() {
   async function createPost(formData) {
@@ -14,6 +15,8 @@ export default function NewPostPage() {
       content,
       userId: 1
     })
+
+    redirect('/feed');
   }
 
   return (
