@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { Lucia } from 'lucia';
 import { BetterSqlite3Adapter } from '@lucia-auth/adatper-sqlite';
 
@@ -17,3 +18,9 @@ const lucia = new Lucia(adapter, {
         }
     }
 });
+
+export async function createAuthSession(userId) {
+    const session = await lucia.createSession(userId, {});
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+}
